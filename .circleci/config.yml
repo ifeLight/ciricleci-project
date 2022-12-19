@@ -6,23 +6,23 @@ orbs:
   welcome: circleci/welcome-orb@0.4.1
 
 jobs:
-  # Define a job called "print hello"
-  print_hello:
+  # Define a job called "print hello world"
+  print_hello_wold:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - run:
-          name: "Print Hello"
-          command: echo "Hello"
+          name: "Print Hello World"
+          command: echo "Hello World"
 
-  # Define a job called "print world"
-  print_world:
+  # Define a job called "print project creator name"
+  print_project_creator:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - run:
-          name: "Print World"
-          command: echo "World"
+          name: "Print Project Creator"
+          command: echo $PROJECT_CREATOR
 
 # Orchestrate or schedule a set of jobs
 workflows:
@@ -31,5 +31,7 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - welcome/run
-      - print_hello
-      - print_world
+      - print_hello_wold
+      - print_project_creator:
+          requires:
+            - print_hello_wold
