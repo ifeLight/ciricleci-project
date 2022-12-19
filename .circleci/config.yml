@@ -5,6 +5,20 @@ orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
 
+commands:
+  print_pipeline_id:
+    parameters:
+      sample_name:
+        type: string
+        default: "Sample Name"
+    steps:
+      - run:
+          name: "Print Pipeline ID"
+          command: echo $CIRCLE_WORKFLOW_ID
+      - run:
+          name: "Print Sample Name"
+          command: echo "Sample Name - << parameters.sample_name >>"
+
 jobs:
   # Define a job called "print hello world"
   print_hello_wold:
@@ -36,6 +50,8 @@ jobs:
           at: /tmp/test
       - run: |
           cat /tmp/test/hello.txt
+      - print_pipeline_id:
+          sample_name: "Another name"
 
 # Orchestrate or schedule a set of jobs
 workflows:
